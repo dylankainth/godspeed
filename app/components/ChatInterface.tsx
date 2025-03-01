@@ -18,6 +18,8 @@ import {
   CardHeader,
 } from "@/app/components/ui/card";
 
+import { useSession } from "next-auth/react";
+
 type Message = {
   id: string;
   content: string;
@@ -25,7 +27,9 @@ type Message = {
   timestamp: Date;
 };
 
-export default async function ChatInterface() {
+export default function ChatInterface() {
+  const { data: session } = useSession();
+
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -103,9 +107,10 @@ export default async function ChatInterface() {
                     </>
                   ) : (
                     <>
-                      <AvatarImage>
-                        <img src="https://i.pravatar.cc/300" alt="User" />
-                      </AvatarImage>
+                      <AvatarImage
+                        src={session?.user?.image || undefined}
+                        alt={session?.user?.name || "User"}
+                      ></AvatarImage>
 
                       <AvatarFallback>U</AvatarFallback>
                     </>

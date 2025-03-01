@@ -16,7 +16,9 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      <div className="container">Hi</div>
+      <div className="container">
+        <h2>How it works</h2>
+      </div>
     </div>
   );
 };
