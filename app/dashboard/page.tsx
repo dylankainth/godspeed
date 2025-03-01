@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from "@/app/components/ui/card";
 import { Badge } from "@/app/components/ui/badge";
+import { Button } from "@/app/components/ui/button";
 import useOpportunities from "@/app/utils/useOpportunities";
 import type { Opportunity } from "@/app/utils/useOpportunities";
 import styles from "./dashboard.module.css";
@@ -111,10 +112,11 @@ const OpportunityCard: React.FC<{ opportunity: Opportunity }> = ({
 
   return (
     <Card
+      className="py-0"
       style={{
-        display: "flex",
-        flexDirection: "row",
-        gap: 10,
+        overflow: "hidden",
+        display: "grid",
+        gridTemplateColumns: "auto 1fr auto",
       }}
     >
       <img
@@ -122,21 +124,29 @@ const OpportunityCard: React.FC<{ opportunity: Opportunity }> = ({
         alt={opportunity.opportunity_name}
         style={{ background: "red", height: "100%" }}
       />
-      <CardHeader>
+      <CardDescription className="py-6">
         <Badge variant="outline">
           {getTimeLeft(opportunity.expiry_timestamp)} days left
         </Badge>
         <CardTitle className="text-2xl">
           {opportunity.opportunity_name}
         </CardTitle>
-        <CardDescription>
-          <div className="flex" style={{ alignItems: "center" }}>
-            {locationIcon}
-            {opportunity.location.address}
-          </div>
-          {opportunity.description}
-        </CardDescription>
-      </CardHeader>
+        <div className="flex" style={{ alignItems: "center" }}>
+          {locationIcon}
+          {opportunity.location.address}
+        </div>
+        <p style={{ marginTop: 10 }}>{opportunity.description}</p>
+      </CardDescription>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "1rem",
+        }}
+      >
+        <Button variant="outline">View</Button>
+      </div>
     </Card>
   );
 };

@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Send } from "lucide-react";
 import { Button } from "@/app/components/ui/button";
 import { Input } from "@/app/components/ui/input";
@@ -30,6 +30,8 @@ type Message = {
 export default function ChatInterface() {
   const { data: session } = useSession();
 
+  const [userChatState, setUserChatState] = useState({});
+
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -47,7 +49,89 @@ export default function ChatInterface() {
     },
   ]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    setUserChatState({
+      user_id: "abc123",
+      name: "Alice",
+      interests: ["AI", "Music", "Startups"],
+      projects: [
+        {
+          name: "AI Music Generator",
+          description: "Creating an AI that composes music.",
+        },
+      ],
+      volunteer_profile: {
+        dob: "1995-06-15",
+        right_to_volunteer: true,
+        skills: ["Machine Learning", "Music Production", "Teaching"],
+        dbs_check: true,
+        health_safety: "No known health issues.",
+        cv_url: "https://example.com/alice_cv.pdf",
+        volunteering_experience: [
+          {
+            title: "AI for Good Volunteer",
+            description: "Helping non-profits implement AI for impact.",
+            organization: "AI for Social Good",
+            date: "2022-06-01",
+            duration: "6 months",
+          },
+          {
+            title: "Music Therapy Assistant",
+            description: "Using music to help patients in hospitals.",
+            organization: "Healing Through Music",
+            date: "2023-01-10",
+            duration: "1 year",
+          },
+        ],
+      },
+      conversation_history: [
+        {
+          question: "What are you working on?",
+          response: "I'm building an AI music generator.",
+        },
+        {
+          question: "That’s awesome! What inspired you to start this?",
+          response: "I love both AI and music, so I wanted to combine them.",
+        },
+        {
+          question:
+            "What’s your date of birth? (We need this to check eligibility.)",
+          response: "1995-06-15",
+        },
+        {
+          question: "Do you have the right to volunteer in your country?",
+          response: "Yes, I do.",
+        },
+        {
+          question:
+            "What skills or interests do you have that might be useful in volunteering?",
+          response: "Machine Learning, Music Production, Teaching",
+        },
+        {
+          question:
+            "Do you have an up-to-date DBS check or a criminal record check?",
+          response: "Yes, I have a valid DBS check.",
+        },
+        {
+          question:
+            "Do you have any health conditions we should consider for safety purposes?",
+          response: "No known health issues.",
+        },
+        {
+          question: "Would you like to upload your CV? (Optional)",
+          response: "Yes, here's the link: https://example.com/alice_cv.pdf",
+        },
+        {
+          question:
+            "What volunteering experience do you have? (Title, description, organization, date, duration)",
+          response:
+            "AI for Good Volunteer at AI for Social Good (6 months), Music Therapy Assistant at Healing Through Music (1 year).",
+        },
+      ],
+    });
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
 
@@ -63,16 +147,40 @@ export default function ChatInterface() {
     setInput("");
 
     // Simulate AI response
-    setTimeout(() => {
-      const aiMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        content:
-          "I'm an AI assistant simulation. In a real application, this would be a response from an AI model like GPT-4.",
-        role: "assistant",
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, aiMessage]);
-    }, 1000);
+    // setTimeout(() => {
+    //   const aiMessage: Message = {
+    //     id: (Date.now() + 1).toString(),
+    //     content:
+    //       "I'm an AI assistant simulation. In a real application, this would be a response from an AI model like GPT-4.",
+    //     role: "assistant",
+    //     timestamp: new Date(),
+    //   };
+    //   setMessages((prev) => [...prev, aiMessage]);
+    // }, 1000);
+
+    // make a request to the /api/getOnloadingChat endpoint
+    const result = await fetch("/api/getOnloadingChat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message: input }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // add data.message to the messages array
+
+        const aiMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          content: data.message,
+          role: "assistant",
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, aiMessage]);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   return (

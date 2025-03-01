@@ -16,6 +16,13 @@ import {
 } from "@/app/components/ui/carousel";
 
 const Home: React.FC = () => {
+  const images = [
+    "/images/p1.jpg",
+    "/images/p2.jpg",
+    "/images/p3.jpg",
+    "/images/p4.jpg",
+  ];
+
   return (
     <div>
       <section className={styles.hero}>
@@ -57,18 +64,18 @@ const Home: React.FC = () => {
           </Card>
           <Card>
             <CardHeader>
-              <CardTitle className="text-2xl">1. Sign Up</CardTitle>
+              <CardTitle className="text-2xl">2. Dashboard</CardTitle>
               <CardDescription>
-                Enter your email below to login to your account
+                Check out the volunteering opportunities through the dashboard
               </CardDescription>
             </CardHeader>
             <CardContent></CardContent>
           </Card>
           <Card>
             <CardHeader>
-              <CardTitle className="text-2xl">1. Sign Up</CardTitle>
+              <CardTitle className="text-2xl">3. Apply</CardTitle>
               <CardDescription>
-                Enter your email below to login to your account
+                Click on the opportunity that you're interested in and apply
               </CardDescription>
             </CardHeader>
             <CardContent></CardContent>
@@ -79,14 +86,16 @@ const Home: React.FC = () => {
       <div className="container" style={{ maxWidth: 750 }}>
         <Carousel>
           <CarouselContent>
-            {Array.from({ length: 5 }).map((_, index) => (
+            {images.map((src, index) => (
               <CarouselItem key={index} className="basis-1/2">
                 <div className="p-1">
                   <Card>
-                    <CardContent className="flex aspect-square items-center justify-center p-6">
-                      <span className="text-4xl font-semibold">
-                        {index + 1}
-                      </span>
+                    <CardContent className="flex aspect-square items-center justify-center">
+                      <img
+                        src={src}
+                        alt=""
+                        className="object-cover object-center w-full h-full"
+                      />
                     </CardContent>
                   </Card>
                 </div>
