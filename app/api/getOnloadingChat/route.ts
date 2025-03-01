@@ -16,6 +16,21 @@ export async function POST(req: NextRequest) {
             'model': 'gpt-4o-mini',
             'messages': [
                 {
+                    'role': 'system',
+                    'content': 'You are a volunteer recruiter, asking questions to the user'
+                },
+                {
+                    'role': 'system',
+                    'content': 'Take in this data and ask the user a question, update their state with new information, just output json like { "output": "...", "follow-up-question": "...", "updatedExistingContext": "...STRING.." }'
+
+                },
+
+                {
+                    'role': 'system',
+                    'content': 'Try to always relate back to the idea of volunteering'
+
+                },
+                {
                     'role': 'user',
                     'content': data.message
                 }

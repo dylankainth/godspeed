@@ -27,6 +27,22 @@ type Message = {
   timestamp: Date;
 };
 
+const questionsToAsk = [
+  { question: "Have you volunteered before?", followup: true },
+  { question: "What are your skills?", followup: true },
+  { question: "Do you have a DBS check?", followup: false },
+  {
+    question: "Do you have accessibility requirements?",
+    followup: false,
+  },
+  { question: "What is your date of birth?", followup: false },
+  {
+    question: "What volunteering experience do you have?",
+    followup: true,
+  },
+  { question: "What do you do for work?", followup: false },
+];
+
 export default function ChatInterface() {
   const { data: session } = useSession();
 
@@ -49,44 +65,20 @@ export default function ChatInterface() {
     },
   ]);
 
-  useEffect(() => {
-    setUserChatState({
-      user_id: "abc123",
-      name: "Alice",
-      projects: [
-        {
-          name: "AI Music Generator",
-          description: "Creating an AI that composes music.",
-        },
-      ],
-      volunteer_profile: {
-        dob: "1995-06-15",
-        right_to_volunteer: true,
-        skills: ["Machine Learning", "Music Production", "Teaching"],
-        dbs_check: true,
-        health_safety: "No known health issues.",
-        cv_url: "https://example.com/alice_cv.pdf",
-        volunteering_experience: [
-          {
-            title: "AI for Good Volunteer",
-            description: "Helping non-profits implement AI for impact.",
-            organization: "AI for Social Good",
-            date: "2022-06-01",
-            duration: "6 months",
-          },
-          {
-            title: "Music Therapy Assistant",
-            description: "Using music to help patients in hospitals.",
-            organization: "Healing Through Music",
-            date: "2023-01-10",
-            duration: "1 year",
-          },
-        ],
-      },
-    });
-  }, []);
+  const [questionToAskIndex, setQuestionToAskIndex] = useState(0);
+  const [followupCount, setFollowupCount] = useState(0);
+  const [userQuestionContext, setUserQuestionContext] = useState(
+    "The user wants to volunteer"
+  );
+  const [userOverallContext, setUserOverallContext] = useState(
+    "The user wants to volunteer"
+  );
 
+  useEffect(() => {}, []);
+
+  // when the user submits and answer
   const handleSubmit = async (e: React.FormEvent) => {
+    // Prevent the form from refreshing the page
     e.preventDefault();
     if (!input.trim()) return;
 
@@ -97,29 +89,60 @@ export default function ChatInterface() {
       role: "user",
       timestamp: new Date(),
     };
-
+    // clears user input field and adds to messages array
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
 
+    const prompt =
+      "{ 'existingContext': " + userChatState + " , 'message': " + input + " }";
     // make a request to the /api/getOnloadingChat endpoint
     const result = await fetch("/api/getOnloadingChat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ message: input }),
+      body: JSON.stringify({ message: prompt }),
     })
       .then((response) => response.json())
       .then((data) => {
-        // add data.message to the messages array
+        const currentQuestionToAsk = questionsToAsk[questionToAskIndex];
 
-        const aiMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          content: data.message,
-          role: "assistant",
-          timestamp: new Date(),
-        };
-        setMessages((prev) => [...prev, aiMessage]);
+        const aiResponse = JSON.parse(data.message);
+
+        setUserOverallContext(
+          (prev) => prev + " " + aiResponse.updatedExistingContext
+        );
+
+        // ask a response / follow up question
+
+        if (followupCount !== 3) {
+          const aiMessage: Message = {
+            id: (Date.now() + 1).toString(),
+            content: aiResponse.output,
+            role: "assistant",
+            timestamp: new Date(),
+          };
+          setMessages((prev) => [...prev, aiMessage]);
+        }
+
+        if (currentQuestionToAsk.followup && followupCount < 3) {
+          setFollowupCount((prev) => prev + 1);
+          return;
+        } else {
+          const userQuestion = questionsToAsk[questionToAskIndex + 1];
+
+          // ask a general question
+          const nextAiQuestion: Message = {
+            id: (Date.now() + 2).toString(),
+            content: userQuestion.question,
+            role: "assistant",
+            timestamp: new Date(),
+          };
+
+          setFollowupCount(0);
+          setQuestionToAskIndex((prev) => prev + 1);
+          setMessages((prev) => [...prev, nextAiQuestion]);
+        }
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -137,6 +160,10 @@ export default function ChatInterface() {
           <div>
             <p className="text-lg font-medium">AI Assistant</p>
             <p className="text-sm text-muted-foreground">Always here to help</p>
+            <p className="text-sm text-muted-foreground">
+              Data: fu count:{followupCount}, askingIndex:{questionToAskIndex}
+              Context: {userOverallContext}
+            </p>
           </div>
         </div>
       </CardHeader>

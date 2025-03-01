@@ -42,12 +42,10 @@ const NavbarIcon: React.FC = () => {
                 Profile
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={async () => {
-                await signOut();
-              }}
-            >
-              Sign Out
+            <DropdownMenuItem onClick={async () => await signOut()}>
+              <Link href="/" className="w-full">
+                Sign Out
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

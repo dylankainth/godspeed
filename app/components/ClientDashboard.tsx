@@ -14,8 +14,6 @@ import type { Opportunity } from "@/app/utils/useOpportunities";
 import styles from "../dashboard/dashboard.module.css";
 
 const Dashboard: React.FC = () => {
-  // const { opportunities } = useOpportunities();
-
   const { opportunities, error } = useOpportunities();
 
   if (error) return <p>Error: {error}</p>;

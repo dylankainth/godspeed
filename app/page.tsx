@@ -15,13 +15,15 @@ import {
   CarouselPrevious,
 } from "@/app/components/ui/carousel";
 import NavbarIcon from "@/app/components/NavbarIcon";
+import Link from "next/link";
+
+import Image from "next/image";
 
 const Home: React.FC = () => {
   const images = [
-    "/images/p1.jpg",
-    "/images/p2.jpg",
-    "/images/p3.jpg",
-    "/images/p4.jpg",
+    "/volunteer-hands.jpg",
+    "/volunteer-people.jpg",
+    "/love-volunteer.jpeg",
   ];
 
   return (
@@ -35,7 +37,9 @@ const Home: React.FC = () => {
           <p>
             We help you find volunteer opportunities that fit your schedule.
           </p>
-          <Button variant="outline">Sign Up →</Button>
+          <Link href="/signin">
+            <Button variant="outline">Sign Up →</Button>
+          </Link>
         </div>
       </section>
 
@@ -94,7 +98,13 @@ const Home: React.FC = () => {
                     <CardContent className="flex aspect-square items-center justify-center">
                       <img
                         src={src}
-                        alt=""
+                        alt={`Image showing ${
+                          index === 0
+                            ? "volunteer hands"
+                            : index === 1
+                            ? "volunteer people"
+                            : "love and volunteering"
+                        }`}
                         className="object-cover object-center w-full h-full"
                       />
                     </CardContent>
