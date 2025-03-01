@@ -20,9 +20,9 @@ const Home: React.FC = () => {
     <div>
       <section className={styles.hero}>
         <div className="container">
-          <h1>
-            Take <div className="handwritten">ownership</div> of your{" "}
-            <div className="handwritten">community</div>.
+          <h1 className="handwritten">
+            Take <span className="hand-underline">ownership</span> of your{" "}
+            <span className="hand-underline">community</span>.
           </h1>
           <p>
             We help you find volunteer opportunities that fit your schedule.

@@ -11,6 +11,26 @@ export const { handlers, auth, signIn, signOut } = NextAuth(() => {
         },
         callbacks: {
 
+            session: async ({ session, token }) => {
+
+
+                const result = await fetch(`${process.env.AUTH_URL}/api/newUser`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        email: session.user.email,
+                        name: session.user.name,
+                        image: session.user.image,
+                        token: token.accessToken,
+                    }),
+                })
+
+                return session;
+            },
+
+
 
 
             authorized({ auth, request: { nextUrl } }) {

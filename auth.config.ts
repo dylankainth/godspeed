@@ -5,22 +5,6 @@ export const authConfig = {
         signIn: '/signin',
     },
     callbacks: {
-
-        async session({ session, token }) {
-            if (session?.user) {
-                try {
-                    await fetch("/api/auth/newUser", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ email: session.user.email, name: session.user.name, token: token }),
-                    });
-                } catch (error) {
-                    console.error("Error sending session update:", error);
-                }
-            }
-            return session;
-        },
-
         authorized({ auth, request: { nextUrl } }) {
 
             const publicPaths = ['/signin'];

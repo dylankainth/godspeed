@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardContent, CardHeader } from "@/app/components/ui/card";
 import {
   Avatar,
@@ -5,12 +7,16 @@ import {
   AvatarImage,
 } from "@/app/components/ui/avatar";
 
+import { Button } from "@/app/components/ui/button";
+
 // import the user type from the auth module
 import { User as NextAuthUser } from "next-auth";
 
 interface User extends NextAuthUser {
   createdAt: string;
 }
+
+import { signOut } from "next-auth/react";
 
 export default function UserProfile({ user }: { user: User }) {
   return (
@@ -43,6 +49,9 @@ export default function UserProfile({ user }: { user: User }) {
             </p>
           </div>
         </div>
+        <Button onClick={() => signOut()} className="bg-red-500 text-white">
+          Logout
+        </Button>
       </CardContent>
     </Card>
   );

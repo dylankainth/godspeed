@@ -1,31 +1,57 @@
-import { Metadata } from "next";
+/* import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import useOpportunity from "@/app/utils/useOpportunity";
+
 interface PageProps {
   params: {
     id: string;
   };
 }
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
-  const res = await fetch(`/api/opportunity/getOpportunity?id = ${params.id}`);
-  if (!res.ok) {
-    return {
-      title: "Opportunity Not Found",
-    };
+
+ export const getOpportunity = async (id: string) => {
+  console.log(id);
+  try {
+    const res = await fetch(`/api/getOpportunity?id=${id}`);
+    if (!res.ok) {
+      return null;
+    }
+    return await res.json();
+  } catch (error) {
+    console.error("Error fetching opportunity: ", error);
+    return null;
   }
-  const opportunity: any = await res.json();
-  return opportunity;
-}
+}; 
+
 const OpportunityPage: React.FC<PageProps> = async ({ params }) => {
-  const res = await fetch(`/api/opportunity/getOpportunity?id=${params.id}`);
-  if (!res.ok) {
-    notFound();
+  const opportunity = useOpportunity(params.id);
+  console.log(opportunity);
+  if (!opportunity) {
+    return <div>Opportunity Not Found</div>;
   }
-  const opportunity: any = await res.json();
   return (
     <div>
-      <h1>Opportunity Page</h1>
-      <p>{opportunity}</p>
+      <p>{opportunity.opportunity}</p>
+    </div>
+  );
+};
+
+export default OpportunityPage; */
+import { notFound } from "next/navigation";
+import ClientOpportunity from "@/app/components/ClientOpportunity";
+
+interface PageProps {
+  params: { id: string };
+}
+
+// Wrapping the async logic outside the component
+const OpportunityPage: React.FC<PageProps> = ({ params }) => {
+  // You can perform async operations outside of the JSX
+  // or utilize server-side functionality like `getServerSideProps` (Next.js)
+
+  return (
+    <div>
+      <h1>Opportunity Details</h1>
+      <ClientOpportunity id={params.id} /> {/* ✅ Render Client Component */}
     </div>
   );
 };
