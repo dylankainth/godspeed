@@ -46,7 +46,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth(() => {
                         if (callbackUrl) {
                             return Response.redirect(callbackUrl);
                         } else {
-                            return Response.redirect(new URL('/', nextUrl.origin));
+                            return Response.redirect(new URL('/dashboard', nextUrl.origin));
                         }
                     }
                     return true;

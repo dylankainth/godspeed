@@ -13,6 +13,7 @@ interface Opportunity {
   location: {
     address: string;
   };
+  tags: [string];
 }
 
 const useOpportunity = (id: string) => {

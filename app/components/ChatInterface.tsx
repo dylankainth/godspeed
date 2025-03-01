@@ -146,18 +146,6 @@ export default function ChatInterface() {
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
 
-    // Simulate AI response
-    // setTimeout(() => {
-    //   const aiMessage: Message = {
-    //     id: (Date.now() + 1).toString(),
-    //     content:
-    //       "I'm an AI assistant simulation. In a real application, this would be a response from an AI model like GPT-4.",
-    //     role: "assistant",
-    //     timestamp: new Date(),
-    //   };
-    //   setMessages((prev) => [...prev, aiMessage]);
-    // }, 1000);
-
     // make a request to the /api/getOnloadingChat endpoint
     const result = await fetch("/api/getOnloadingChat", {
       method: "POST",
