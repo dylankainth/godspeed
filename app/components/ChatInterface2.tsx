@@ -46,8 +46,6 @@ const questionsToAsk = [
 export default function ChatInterface() {
   const { data: session } = useSession();
 
-  const [userChatState, setUserChatState] = useState({});
-
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -66,12 +64,11 @@ export default function ChatInterface() {
   ]);
 
   const [questionToAskIndex, setQuestionToAskIndex] = useState(0);
-  const [followupCount, setFollowupCount] = useState(0);
-  const [userQuestionContext, setUserQuestionContext] = useState(
-    "The user wants to volunteer"
-  );
+  const [followupCount, setFollowupCount] = useState(0); // max 3
+
+  const [userQuestionContext, setUserQuestionContext] = useState("");
   const [userOverallContext, setUserOverallContext] = useState(
-    "The user wants to volunteer"
+    "The user wants to volunteer."
   );
 
   useEffect(() => {}, []);
@@ -82,75 +79,113 @@ export default function ChatInterface() {
     e.preventDefault();
     if (!input.trim()) return;
 
-    // Add user message
+    // Displays the message that the user just typed in the box on the screen
     const userMessage: Message = {
       id: Date.now().toString(),
       content: input,
       role: "user",
       timestamp: new Date(),
     };
-    // clears user input field and adds to messages array
     setMessages((prev) => [...prev, userMessage]);
+
+    // clears user input field
     setInput("");
 
-    const prompt =
-      "{ 'existingContext': " +
-      userOverallContext +
-      " , 'message': " +
-      input +
-      " }";
-    // make a request to the /api/getOnloadingChat endpoint
-    const result = await fetch("/api/getOnloadingChat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ message: prompt }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const currentQuestionToAsk = questionsToAsk[questionToAskIndex];
+    // UTILS
+    const nextGeneralQuestion = () => {
+      // ask a general question
+      const userQuestion = questionsToAsk[questionToAskIndex + 1];
 
-        const aiResponse = JSON.parse(data.message);
+      // puts the next general question on the screen as if the assistant is asking it
+      const nextAiQuestion: Message = {
+        id: (Date.now() + 2).toString(),
+        content: userQuestion.question,
+        role: "assistant",
+        timestamp: new Date(),
+      };
 
-        setUserOverallContext(
-          (prev) => prev + " " + aiResponse.updatedExistingContext
-        );
-
-        // ask a response / follow up question
-
-        if (followupCount !== 3) {
-          const aiMessage: Message = {
-            id: (Date.now() + 1).toString(),
-            content: aiResponse.output,
-            role: "assistant",
-            timestamp: new Date(),
-          };
-          setMessages((prev) => [...prev, aiMessage]);
-        }
-
-        if (currentQuestionToAsk.followup && followupCount < 3) {
-          setFollowupCount((prev) => prev + 1);
-          return;
-        } else {
-          const userQuestion = questionsToAsk[questionToAskIndex + 1];
-
-          // ask a general question
-          const nextAiQuestion: Message = {
-            id: (Date.now() + 2).toString(),
-            content: userQuestion.question,
-            role: "assistant",
-            timestamp: new Date(),
-          };
-
-          setFollowupCount(0);
-          setQuestionToAskIndex((prev) => prev + 1);
-          setMessages((prev) => [...prev, nextAiQuestion]);
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
+      setFollowupCount(0);
+      console.log(userQuestion.question);
+      setUserQuestionContext(userQuestion.question);
+      setQuestionToAskIndex((prev) => prev + 1);
+      setMessages((prev) => [...prev, nextAiQuestion]);
+      return;
+    };
+    const displayMessage = (message: Message) => {
+      setMessages((prev) => [...prev, message]);
+    };
+    const getAiResponse = async (prompt: string) => {
+      // make a request to the /api/getOnloadingChat endpoint
+      const result = await fetch("/api/getOnloadingChat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: prompt }),
       });
+
+      const data = await result.json();
+
+      const aiResponse = JSON.parse(data.message);
+
+      // appends the ai's question reply context to the string of the user's overall context
+      setUserOverallContext(
+        (prev) => prev + " " + aiResponse.updatedExistingContext
+      );
+
+      return aiResponse;
+    };
+    // const recordResults = async (userAnswer: string) => {
+    //   // make a request to the /api/recordResults endpoint
+    //   const result = await fetch("/api/recordResults", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       userAnswer,
+    //       userOverallContext,
+    //     }),
+    //   });
+
+    //   const data = await result.json();
+
+    //   return data;
+    // };
+
+    // CHECK if it's a follow up question
+    if (questionsToAsk[questionToAskIndex].followup) {
+      // it's a follow up question. first check if FU limit is reached; if yes ask the next general question. if not, ask the next follow up question (i.e. just return)
+      if (followupCount === 3) {
+        setUserQuestionContext("");
+        nextGeneralQuestion();
+      } else {
+        // ask the next follow up question, i.e. get AI response and display it
+        const prompt =
+          "{ 'existingContext': " +
+          userQuestionContext +
+          " , 'message': " +
+          input +
+          " }";
+        const aiResponse = await getAiResponse(prompt);
+        const aiMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          content: aiResponse.output,
+          role: "assistant",
+          timestamp: new Date(),
+        };
+        displayMessage(aiMessage);
+        setFollowupCount((prev) => prev + 1);
+      }
+    } else {
+      // it's not a follow up question. RECORD RESULTS by asking AI to summarise, then ask the next general question
+      const aiResponse = await getAiResponse(input);
+      const data = await aiResponse.json();
+      const sas = JSON.parse(data.message);
+      console.log(sas);
+
+      nextGeneralQuestion();
+    }
   };
 
   return (
@@ -166,7 +201,10 @@ export default function ChatInterface() {
             <p className="text-sm text-muted-foreground">Always here to help</p>
             <p className="text-sm text-muted-foreground">
               Data: fu count:{followupCount}, askingIndex:{questionToAskIndex}
-              Context: {userOverallContext}
+              <br />
+              OVERALL Context: {userOverallContext}
+              <br />
+              QUESTION Context: {userQuestionContext}
             </p>
           </div>
         </div>

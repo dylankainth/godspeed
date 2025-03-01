@@ -9,7 +9,7 @@ interface PageProps {
 const OpportunityPage: React.FC<PageProps> = ({ params }) => {
   return (
     <div>
-      <h1 className="text-2xl font-bold mt-3 text-center">
+      <h1 className="text-2xl font-bold mt-3 mb-2 text-center">
         {" "}
         Opportunity Details{" "}
       </h1>

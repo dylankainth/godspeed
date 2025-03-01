@@ -41,6 +41,7 @@ export async function POST(req: NextRequest) {
 
     const json = await response.json();
 
+
     const message = json.choices[0].message.content;
 
     // const response = await fetch('https://openai.services.dylankainth.com/api/generate', {
