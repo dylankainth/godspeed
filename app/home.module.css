@@ -17,6 +17,12 @@
 
 .hero h1 {
   font-size: 4rem;
+  line-height: 1;
+}
+
+.howItWorks {
+  padding: 0 20px;
+  
 }
 
 @media (max-width: 768px) {
@@ -28,3 +34,4 @@
     font-size: 3rem;
   }
 }
+

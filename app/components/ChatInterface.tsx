@@ -34,7 +34,14 @@ export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
-      content: "Hello! I'm your AI assistant. How can I help you today?",
+      content:
+        "Hello! I'm your volunteering matcher AI. I'd love to get to know you better so I can alert you to the perfect volunteer opportunities as they happen",
+      role: "assistant",
+      timestamp: new Date(),
+    },
+    {
+      id: "2",
+      content: "Firstly, have you volunteered before?",
       role: "assistant",
       timestamp: new Date(),
     },

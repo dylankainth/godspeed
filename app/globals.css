@@ -3,6 +3,7 @@
 :root {
   --white: #fff;
   --black: #000;
+  --muted: #6c757d;
   --aqua-1: #07beb8;
   --aqua-2: #3dccc7;
   --aqua-3: #68d8d6;
@@ -52,9 +53,28 @@ button:focus {
   outline: 2px solid var(--focus);
 }
 
+.handwritten {
+  font-family: var(--font-nanum-pen-script)
+}
+
 .container {
-  padding: 60px 20px;
+  padding: 80px 20px;
   max-width: 1000px;
   margin: 0 auto;
 }
 
+.break {
+  margin-top: 20px;
+}
+
+.title h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.title p {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--muted);
+} 
