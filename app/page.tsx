@@ -5,13 +5,18 @@ const Home: React.FC = () => {
   return (
     <div>
       <section className={styles.hero}>
-        <h1>
-          Want to volunteer <strong>last minute</strong>?
-        </h1>
-        <Button variant="outline">Sign Up →</Button>
+        <div className="container">
+          <h1>
+            Want to volunteer <strong>last minute</strong>?
+          </h1>
+          <p>
+            We help you find volunteer opportunities that fit your schedule.
+          </p>
+          <Button variant="outline">Sign Up →</Button>
+        </div>
       </section>
 
-      <div style={{ height: 1000 }} />
+      <div className="container">Hi</div>
     </div>
   );
 };
