@@ -11,6 +11,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth(() => {
         },
         callbacks: {
 
+
+
             authorized({ auth, request: { nextUrl } }) {
 
                 const publicPaths = ['/', '/signin'];

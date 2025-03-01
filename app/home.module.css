@@ -1,7 +1,22 @@
 .hero {
-  height: 200px;
+  height: 500px;
+  padding: 3%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: var(--foreground);
+  background-color: var(--aqua-5);
+  gap: 20px;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  color: var(--aqua-3);
+  text-align: center; 
+}
+
+@media (min-width: 768px) {
+  .hero {
+    align-items: flex-start;
+  }
 }
