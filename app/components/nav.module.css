@@ -6,7 +6,7 @@
   backdrop-filter: saturate(180%) blur(5px);
   gap: 20px;
 
-  z-index: 1000;
+  z-index: 50;
   position: sticky;
   position: -webkit-sticky;
   top: 0;

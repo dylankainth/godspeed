@@ -14,6 +14,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/app/components/ui/carousel";
+import NavbarIcon from "@/app/components/NavbarIcon";
 
 const Home: React.FC = () => {
   const images = [

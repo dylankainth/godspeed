@@ -53,7 +53,6 @@ export default function ChatInterface() {
     setUserChatState({
       user_id: "abc123",
       name: "Alice",
-      interests: ["AI", "Music", "Startups"],
       projects: [
         {
           name: "AI Music Generator",
@@ -84,50 +83,6 @@ export default function ChatInterface() {
           },
         ],
       },
-      conversation_history: [
-        {
-          question: "What are you working on?",
-          response: "I'm building an AI music generator.",
-        },
-        {
-          question: "That’s awesome! What inspired you to start this?",
-          response: "I love both AI and music, so I wanted to combine them.",
-        },
-        {
-          question:
-            "What’s your date of birth? (We need this to check eligibility.)",
-          response: "1995-06-15",
-        },
-        {
-          question: "Do you have the right to volunteer in your country?",
-          response: "Yes, I do.",
-        },
-        {
-          question:
-            "What skills or interests do you have that might be useful in volunteering?",
-          response: "Machine Learning, Music Production, Teaching",
-        },
-        {
-          question:
-            "Do you have an up-to-date DBS check or a criminal record check?",
-          response: "Yes, I have a valid DBS check.",
-        },
-        {
-          question:
-            "Do you have any health conditions we should consider for safety purposes?",
-          response: "No known health issues.",
-        },
-        {
-          question: "Would you like to upload your CV? (Optional)",
-          response: "Yes, here's the link: https://example.com/alice_cv.pdf",
-        },
-        {
-          question:
-            "What volunteering experience do you have? (Title, description, organization, date, duration)",
-          response:
-            "AI for Good Volunteer at AI for Social Good (6 months), Music Therapy Assistant at Healing Through Music (1 year).",
-        },
-      ],
     });
   }, []);
 
