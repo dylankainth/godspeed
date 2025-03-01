@@ -1,13 +1,11 @@
 import NextAuth from 'next-auth';
 import Google from "next-auth/providers/google"
 
-import { MongoDBAdapter } from "@auth/mongodb-adapter"
-import client from "./lib/db"
 
 export const { handlers, auth, signIn, signOut } = NextAuth(() => {
 
     return {
-        adapter: MongoDBAdapter(client),
+
         pages: {
             signIn: '/signin',
         },
@@ -15,7 +13,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth(() => {
 
             authorized({ auth, request: { nextUrl } }) {
 
-                const publicPaths = ['/', '/signin', '/about'];
+                const publicPaths = ['/', '/signin'];
 
                 const isLoggedIn = !!auth?.user;
 
@@ -26,7 +24,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth(() => {
                         if (callbackUrl) {
                             return Response.redirect(callbackUrl);
                         } else {
-                            return Response.redirect(new URL('/board', nextUrl.origin));
+                            return Response.redirect(new URL('/', nextUrl.origin));
                         }
                     }
                     return true;
@@ -48,7 +46,3 @@ export const { handlers, auth, signIn, signOut } = NextAuth(() => {
         ],
     }
 });
-
-export const config = {
-    runtime: 'nodejs'
-};
