@@ -5,7 +5,7 @@ import useOpportunities from "@/app/utils/useOpportunities";
 import {
   Card,
   CardHeader,
-  CardDescription,
+  CardDescription, 
   CardTitle,
 } from "@/app/components/ui/card";
 import { Badge } from "@/app/components/ui/badge";
@@ -76,7 +76,7 @@ const OpportunityCard: React.FC<{ opportunity: Opportunity }> = ({
       <img
         src={opportunity.image}
         alt={opportunity.opportunity_name}
-        style={{ background: "red", height: "100%", width: 200 }}
+        className="w-[200px] h-full object-contain bg-red-500"
       />
       <CardDescription className="py-6">
         <Badge variant="outline">
