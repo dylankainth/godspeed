@@ -1,18 +1,17 @@
 "use client";
-
 import { useRouter } from "next/navigation";
 import useOpportunities from "@/app/utils/useOpportunities";
 import {
   Card,
   CardHeader,
-  CardDescription, 
+  CardDescription,
   CardTitle,
 } from "@/app/components/ui/card";
 import { Badge } from "@/app/components/ui/badge";
 import { Button } from "@/app/components/ui/button";
 import type { Opportunity } from "@/app/utils/useOpportunities";
 import styles from "../dashboard/dashboard.module.css";
-
+import { motion } from "framer-motion";
 const Dashboard: React.FC = () => {
   const { opportunities, error } = useOpportunities();
 
@@ -65,62 +64,73 @@ const OpportunityCard: React.FC<{ opportunity: Opportunity }> = ({
   };
 
   return (
-    <Card
-      className="py-0"
-      /* style={{
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      viewport={{ once: true, amount: 0.2 }} // Only animate once, triggers at 20% visibility
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      <Card
+        className="py-0"
+        /* style={{
         overflow: "hidden",
         display: "grid",
         gridTemplateColumns: "auto 1fr auto",
       }} */
-    >
-      <div className="grid md:grid-cols-[150px_2fr_auto] gap-4" // Default grid layout
-        style={{ overflow: "hidden" }}>
-          <div className="w-[150px]">
-      <div className = "w-full md:w-[150px] h-full">
-      <img
-        src={opportunity.image}
-        alt={opportunity.opportunity_name}
-        className="w-full h-full object-cover bg-red-500"
-      />
-      </div>
-      </div>
-      <CardDescription className="py-6 flex flex-col gap-2">
-        <div className="flex gap-2">
-          <Badge variant="outline">
-            {getTimeLeft(opportunity.expiry_timestamp)} days left
-          </Badge>
-          <Badge variant="outline">
-            {Math.round((opportunity.score ?? 0) * 100)}% match
-          </Badge>
-        </div>
-        <CardTitle className="text-2xl">
-          {opportunity.opportunity_name}
-        </CardTitle>
-        <div className="flex" style={{ alignItems: "center" }}>
-          {locationIcon}
-          {opportunity.location.address}
-        </div>
-        <p style={{ marginTop: 10 }}>{opportunity.description}</p>
-      </CardDescription>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: "1rem",
-        }}
       >
-        <div className="flex justify-center items-center p-4">
-        <Button
-          variant="outline"
-          onClick={() => router.push(`/opportunity/${opportunity._id}`)}
+        <div
+          className="grid md:grid-cols-[200px_2fr_auto] gap-4 md:items-stretch" // Default grid layout
+          style={{ overflow: "hidden" }}
         >
-          View
-        </Button>
+          <div className="w-full md:w-[200px] h-full">
+            <img
+              src={opportunity.image}
+              alt={opportunity.opportunity_name}
+              className="w-full h-full object-cover bg-red-500"
+            />
+          </div>
+          <CardDescription className="py-6 flex flex-col gap-2">
+            <div className="flex gap-2">
+              <Badge variant="outline">
+                {getTimeLeft(opportunity.expiry_timestamp)} days left
+              </Badge>
+              {opportunity.score !== undefined && (
+                <Badge variant="outline">
+                  {Math.round((opportunity.score ?? 0) * 100)}% match
+                </Badge>
+              )}
+            </div>
+            <CardTitle className="text-2xl">
+              {opportunity.opportunity_name}
+            </CardTitle>
+            <div className="flex" style={{ alignItems: "center" }}>
+              {locationIcon}
+              {opportunity.location.address}
+            </div>
+            <p style={{ marginTop: 10 }}>{opportunity.description}</p>
+          </CardDescription>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "1rem",
+            }}
+          >
+            <div className="flex justify-center items-center p-4">
+              <Button
+                variant="outline"
+                onClick={() => router.push(`/opportunity/${opportunity._id}`)}
+              >
+                View
+              </Button>
+            </div>
+          </div>
         </div>
-      </div>
-      </div>
-    </Card>
+      </Card>
+    </motion.div>
   );
 };
 

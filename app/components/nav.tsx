@@ -6,23 +6,19 @@ import Link from "next/link";
 const Nav: React.FC = async () => {
   return (
     <div className={styles.nav}>
-      <Link
-          href="/"
-         >        
-
+      <Link href="/">
         <div
-        className="handwritten"
+          className="handwritten"
           style={{
             display: "flex",
             alignItems: "center",
             gap: 10,
-            fontSize: 50,
-        
-            
           }}
         >
           <Logo />
-          <strong>GODSPEED.</strong>
+          <strong
+          style={[fontSize: 50,]}
+          >GODSPEED.</strong>
         </div>
       </Link>
 
