@@ -74,14 +74,7 @@ const OpportunityCard: React.FC<{ opportunity: Opportunity }> = ({
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
-      <Card
-        className="py-0"
-        /* style={{
-        overflow: "hidden",
-        display: "grid",
-        gridTemplateColumns: "auto 1fr auto",
-      }} */
-      >
+      <Card className="py-0">
         <div
           className="grid md:grid-cols-[200px_2fr_auto] gap-4 md:items-stretch" // Default grid layout
           style={{ overflow: "hidden" }}
@@ -93,7 +86,7 @@ const OpportunityCard: React.FC<{ opportunity: Opportunity }> = ({
               className="w-full h-full object-cover bg-red-500 rounded-t-lg md:rounded-l-lg md:rounded-t-none"
             />
           </div>
-          <CardDescription className="py-6 flex flex-col gap-2">
+          <CardDescription className="py-6 flex flex-col gap-2 ml-3 sm:ml-0">
             <div className="flex gap-2">
               <Badge
                 variant="outline"

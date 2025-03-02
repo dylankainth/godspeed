@@ -123,14 +123,6 @@ export default function ClientOpportunity({ id }: { id: string }) {
           Apply now →
         </Button>
       </div>
-      <div className="mt-8 text-center">
-        <button
-          onClick={handleApply}
-          className="bg-teal-600 hover:bg-teal-700 text-white text-lg font-semibold py-3 px-8 rounded-lg shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50"
-        >
-          Apply Now
-        </button>
-      </div>
     </div>
   );
 }

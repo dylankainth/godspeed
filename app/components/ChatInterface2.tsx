@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-
+import Styles from "./ChatInterface2.module.css";
 import { useEffect, useState } from "react";
 import { Send } from "lucide-react";
 import { Button } from "@/app/components/ui/button";
@@ -219,7 +219,10 @@ export default function ChatInterface() {
       </CardHeader>
       <CardContent className="p-4">
         <div
-          className="space-y-4 h-[400px] overflow-y-auto mb-4"
+          className={
+            `space-y-4 h-[400px] overflow-y-auto mb-4 customScrollbar px-3 ` +
+            Styles.customScrollbar
+          }
           id="messageContainer"
         >
           {messages.map((message) => (

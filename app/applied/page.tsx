@@ -3,6 +3,7 @@
 import Link from "next/link";
 import confetti from "canvas-confetti";
 import { useEffect } from "react";
+import { Button } from "../components/ui/button";
 
 const fireConfetti = () => {
   const count = 100;
@@ -54,10 +55,19 @@ const AppliedPage: React.FC = () => {
         <p className="text-lg text-gray-800">You have successfully applied.</p>
         <Link
           href="/dashboard"
-          className="mt-6 inline-block bg-teal-600 hover:bg-teal-700 text-white text-lg font-semibold py-3 px-6 rounded-lg shadow-md transition-all duration-300"
-          style={{ background: "#07BEB8", color: "white" }}
+          /* className="mt-6 inline-block bg-teal-600 hover:bg-teal-700 text-white text-lg font-semibold py-3 px-6 rounded-lg shadow-md transition-all duration-300"
+          style={{ background: "#07BEB8", color: "white" }} */
         >
-          Back to Dashboard
+          <Button
+            style={{
+              display: "inline-block",
+              marginTop: 30,
+              width: "min-content",
+            }}
+            variant="outline"
+          >
+            Back to Dashboard →
+          </Button>
         </Link>
       </div>
     </div>
