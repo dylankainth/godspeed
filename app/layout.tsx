@@ -18,6 +18,7 @@ const geistMono = Geist_Mono({
 const nanumPenScript = Nanum_Pen_Script({
   variable: "--font-nanum-pen-script",
   weight: "400",
+  subsets: ["latin"]
 });
 
 export const metadata: Metadata = {
