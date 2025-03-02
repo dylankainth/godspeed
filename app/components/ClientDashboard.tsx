@@ -88,7 +88,7 @@ const OpportunityCard: React.FC<{ opportunity: Opportunity }> = ({
             <img
               src={opportunity.image}
               alt={opportunity.opportunity_name}
-              className="w-full h-full object-cover bg-red-500"
+              className="w-full h-full object-cover bg-red-500 rounded-t-lg md:rounded-l-lg md:rounded-t-none"
             />
           </div>
           <CardDescription className="py-6 flex flex-col gap-2">

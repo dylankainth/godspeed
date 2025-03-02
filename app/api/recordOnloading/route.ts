@@ -43,9 +43,22 @@ export async function POST(req: NextRequest) {
 
     const message = json.choices[0].message.content;
 
-    console.log(session, message);
+    // run the embedding on the user's response
+    const embeddingData = await fetch('https://api.openai.com/v1/embeddings', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + process.env.OPENAI_API_KEY
+        },
+        body: JSON.stringify({
+            'model': 'text-embedding-3-small',
+            'input': message
+        })
+    })
 
+    const jsonEmbedding = await embeddingData.json();
 
+    const embedding = jsonEmbedding.data[0].embedding;
 
     const url = process.env.MONGODB_URI;
 
@@ -61,7 +74,7 @@ export async function POST(req: NextRequest) {
 
     // add the user's response to the database on the record with the user's email
     await collection
-        .updateOne({ email: session?.user.email }, { $set: { userInfo: message } });
+        .updateOne({ email: session?.user.email }, { $set: { userInfo: message, embedding: embedding } });
 
 
 

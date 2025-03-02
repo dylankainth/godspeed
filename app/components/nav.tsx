@@ -16,9 +16,7 @@ const Nav: React.FC = async () => {
           }}
         >
           <Logo />
-          <strong
-          style={[fontSize: 50,]}
-          >GODSPEED.</strong>
+          <strong style={{ fontSize: 50, height: 64 }}>GODSPEED.</strong>
         </div>
       </Link>
 

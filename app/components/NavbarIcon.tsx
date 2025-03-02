@@ -31,7 +31,7 @@ const NavbarIcon: React.FC = () => {
                 alt="User profile image"
                 width={32}
                 height={32}
-                className="rounded-full"
+                className="rounded-full border"
               />
               <span className="sr-only">User menu</span>
             </Button>
@@ -59,7 +59,7 @@ const NavbarIcon: React.FC = () => {
         //   Login
         // </Link>
         <Link href="/signin" passHref>
-          <Button>Login</Button>
+          <Button className="border">Login</Button>
         </Link>
       )}
     </div>

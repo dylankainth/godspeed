@@ -22,6 +22,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth(() => {
                     }),
                 });
 
+                const data = await result.json();
+
+                if (data.status === 1) {
+                    // a new user has been created
+                    // redirect to /onloading
+                    return '/onloading';
+                }
+
+
+
+
                 return true;
             },
             session: async ({ session, token }) => {

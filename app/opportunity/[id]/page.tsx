@@ -1,4 +1,5 @@
 import ClientOpportunity from "@/app/components/ClientOpportunity";
+import Link from "next/link";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -8,11 +9,10 @@ interface PageProps {
 const OpportunityPage: React.FC<PageProps> = async ({ params }) => {
   const { id } = await params;
   return (
-    <div>
-      <h1 className="text-2xl font-bold mt-3 mb-2 text-center">
-        {" "}
-        Opportunity Details{" "}
-      </h1>
+    <div className="container mx-auto px-4">
+      <div className="mb-4">
+        <Link href="/dashboard">← Back to All Opportunities</Link>
+      </div>
       <ClientOpportunity id={id} /> {/* ✅ Render Client Component */}
     </div>
   );

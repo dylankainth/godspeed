@@ -27,13 +27,13 @@ export async function POST(req: NextRequest) {
 
     if (user) {
         client.close();
-        return new Response('User already exists', { status: 400 });
+        return new Response(JSON.stringify({ message: 'User already exists', status: 0 }), { status: 201 });
     }
 
     await collection.insertOne(data);
 
     client.close();
 
-    return new Response('User created', { status: 201 });
+    return new Response(JSON.stringify({ message: 'User created', status: 1 }), { status: 201 });
 
 }

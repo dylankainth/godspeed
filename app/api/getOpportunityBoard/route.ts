@@ -53,11 +53,24 @@ export async function GET() {
 
     }
 
+    // if the user doesnt have an embedding, return an error
+    if (!user.embedding) {
+
+        return new Response(JSON.stringify(allOpportunities));
+
+    }
+
     // get the embedding
     const userEmbedding = user.embedding;
 
 
     for (const opportunity of allOpportunities) {
+
+        // skip if the opportuntity doesnt have an embedding
+        if (!opportunity.embedding) {
+            continue;
+        }
+
         // do vector search between userEmbedding and opportunity.embedding
         // add the result to opportunity.score
 

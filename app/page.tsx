@@ -20,10 +20,13 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import Vara from "vara";
+import { useSession } from "next-auth/react";
 
 import Image from "next/image";
 
 const Home: React.FC = () => {
+  const { data: session } = useSession();
+
   const initialized = useRef(false);
   const [scrollListeners, setScrollListeners] = useState<(() => void)[]>([]);
 
@@ -114,37 +117,75 @@ const Home: React.FC = () => {
               We help you find volunteer opportunities that fit your schedule.
             </p>
 
-            <Link href="/signin">
+            <Link
+              href={session ? "/dashboard" : "/signin"}
+              style={{ display: "inline-block", outline: 0 }}
+            >
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 300 }}
                 style={{ width: "min-content" }}
               >
-                <Button
-                  style={{
-                    display: "inline-block",
-                    marginTop: 30,
-                    width: "min-content",
-                  }}
-                  variant="outline"
-                >
-                  Sign Up →
-                </Button>
+                {!session ? (
+                  <Button
+                    style={{
+                      display: "inline-block",
+                      marginTop: 30,
+                      width: "min-content",
+                    }}
+                    variant="outline"
+                  >
+                    Sign Up →
+                  </Button>
+                ) : (
+                  <Button
+                    style={{
+                      display: "inline-block",
+                      marginTop: 30,
+                      width: "min-content",
+                    }}
+                    variant="outline"
+                  >
+                    Dashboard →
+                  </Button>
+                )}
               </motion.div>
             </Link>
           </motion.div>
         </div>
       </section>
 
-      <div className="container">
+      <div
+        className="container"
+        style={{
+          fontSize: "1.1rem",
+        }}
+      >
         <p id="handwritten-1" className={styles.handwritten} />
         <div className="break" />
         <p>
-          Basically, we help you find volunteer opportunities that fit your
-          schedule. We know that you're busy and that you want to help out when
-          you can. We make it easy for you to find opportunities that fit your
-          schedule.
+          We all want to make a difference in our community, but{" "}
+          <strong>
+            it can be hard to find opportunities that fit your schedule
+          </strong>
+          . At the same time, organizations are often in need of a pair of hands
+          in <strong>very short notice</strong>.
+        </p>
+        <div className="break" />
+        <p>
+          <strong>
+            We will connect you with local organizations who need urgent help on
+            the same day, so you can start volunteering right away.
+          </strong>{" "}
+          You can volunteer for a few hours a week or a few hours a month. It's
+          up to you.
+        </p>
+        <div className="break" />
+        <p>
+          <strong>
+            <code>Good for you, good for your community.</code>
+          </strong>
         </p>
       </div>
 
@@ -277,34 +318,35 @@ const Home: React.FC = () => {
         </motion.div>
       </section>
 
-      <div className="container" style={{ maxWidth: 750 }}>
-        {/*         <Carousel>
-          <CarouselContent>
-            {images.map((src, index) => (
-              <CarouselItem key={index} className="basis-1/2">
-                <div className="p-1">
-                  <Card>
-                    <CardContent className="flex aspect-square items-center justify-center">
-                      <img
-                        src={src}
-                        alt={`Image showing ${
-                          index === 0
-                            ? "volunteer hands"
-                            : index === 1
-                            ? "volunteer people"
-                            : "love and volunteering"
-                        }`}
-                        className="object-cover object-center w-full h-full"
-                      />
-                    </CardContent>
-                  </Card>
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel> */}
+      <div className="container">
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
+          <Button
+            style={{ display: "block", margin: "0 auto" }}
+            variant="outline"
+          >
+            Get Started
+          </Button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="100px"
+            height="100px"
+            viewBox="0 0 100 100"
+            version="1.1"
+            fill="currentColor"
+            style={{ marginTop: 10, marginRight: 60 }}
+          >
+            <g id="surface1">
+              <path d="M 98.875 28.472656 C 95.050781 19.261719 88.796875 11.269531 85.839844 1.539062 C 85.320312 -0.0234375 82.714844 -0.71875 82.019531 1.019531 C 77.847656 10.75 71.59375 19.609375 68.636719 29.863281 C 68.117188 31.773438 70.722656 33.6875 72.113281 31.949219 C 74.199219 29.34375 76.632812 27.257812 79.0625 24.824219 C 78.714844 39.769531 79.0625 54.710938 76.457031 69.480469 C 75.066406 77.476562 73.15625 86.511719 67.421875 92.59375 C 60.472656 99.890625 51.78125 93.289062 47.960938 86.511719 C 44.660156 80.601562 38.925781 55.058594 27.457031 63.921875 C 20.679688 69.132812 18.941406 76.257812 16.855469 84.078125 C 16.335938 86.335938 15.464844 88.421875 14.421875 90.332031 C 10.425781 97.804688 5.214844 85.640625 5.039062 82.6875 C 4.691406 76.777344 6.429688 70.699219 7.820312 64.964844 C 8.34375 63.226562 5.734375 62.53125 5.039062 64.269531 C 1.914062 72.433594 -2.429688 86.335938 5.039062 93.460938 C 11.644531 99.542969 17.203125 95.546875 19.808594 88.421875 C 21.546875 83.730469 28.152344 57.664062 35.796875 69.828125 C 40.835938 77.820312 42.226562 87.378906 48.308594 94.851562 C 52.652344 100.0625 60.472656 101.28125 66.554688 98.671875 C 73.851562 95.371094 76.980469 85.640625 78.890625 78.691406 C 83.582031 61.3125 83.582031 42.546875 83.0625 24.648438 C 87.230469 27.429688 91.921875 30.035156 96.613281 31.773438 C 98.527344 32.296875 99.570312 29.863281 98.875 28.472656 Z M 76.285156 22.21875 C 78.542969 17.351562 81.324219 12.488281 83.753906 7.621094 C 86.363281 13.703125 89.664062 19.089844 92.792969 24.996094 C 89.140625 22.738281 85.667969 20.132812 81.671875 19.609375 C 80.800781 19.4375 80.105469 19.957031 79.757812 20.652344 C 78.542969 20.828125 77.328125 21.347656 76.285156 22.21875 Z M 76.285156 22.21875 " />
+            </g>
+          </svg>
+        </div>
       </div>
     </div>
   );

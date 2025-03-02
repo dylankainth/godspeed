@@ -62,7 +62,9 @@ export default function ChatInterface() {
   const [questionToAskIndex, setQuestionToAskIndex] = useState(0);
   const [followupCount, setFollowupCount] = useState(0); // max 3
 
-  const [userQuestionContext, setUserQuestionContext] = useState("The user wants to volunteer.");
+  const [userQuestionContext, setUserQuestionContext] = useState(
+    "The user wants to volunteer."
+  );
   const [userOverallContext, setUserOverallContext] = useState(
     "The user wants to volunteer."
   );
@@ -180,15 +182,14 @@ export default function ChatInterface() {
       // it's not a follow up question. RECORD RESULTS by asking AI to summarise, then ask the next general question
       const aiResponse = await getAiResponse(
         "{ 'existingContext': " +
-        userQuestionContext +
-        " , 'message': " +
-        input +
-        " }"
-      )
+          userQuestionContext +
+          " , 'message': " +
+          input +
+          " }"
+      );
       setUserOverallContext(
         (prev) => prev + " " + aiResponse.updatedExistingContext
       );
-
 
       if (questionToAskIndex === questionsToAsk.length - 1) {
         // if the last question has been asked, end the conversation
@@ -211,11 +212,11 @@ export default function ChatInterface() {
           }),
         });
 
+        // send user to /dashboard
+        window.location.href = "/dashboard";
       } else {
         nextGeneralQuestion();
       }
-
-     
     }
   };
 
