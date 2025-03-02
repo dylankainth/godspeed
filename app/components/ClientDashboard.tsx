@@ -67,12 +67,14 @@ const OpportunityCard: React.FC<{ opportunity: Opportunity }> = ({
   return (
     <Card
       className="py-0"
-      style={{
+      /* style={{
         overflow: "hidden",
         display: "grid",
         gridTemplateColumns: "auto 1fr auto",
-      }}
+      }} */
     >
+      <div className="grid md:grid-cols-[auto_1fr_auto]" // Default grid layout
+        style={{ overflow: "hidden" }}>
       <img
         src={opportunity.image}
         alt={opportunity.opportunity_name}
@@ -99,12 +101,15 @@ const OpportunityCard: React.FC<{ opportunity: Opportunity }> = ({
           padding: "1rem",
         }}
       >
+        <div className="flex justify-center items-center p-4">
         <Button
           variant="outline"
           onClick={() => router.push(`/opportunity/${opportunity._id}`)}
         >
           View
         </Button>
+        </div>
+      </div>
       </div>
     </Card>
   );
