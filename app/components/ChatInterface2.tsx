@@ -31,7 +31,18 @@ type Message = {
 
 const questionsToAsk = [
   { question: "Have you volunteered before?", followup: true },
+  { question: "What are your skills?", followup: true },
   { question: "Do you have a DBS check?", followup: false },
+  { question: "What is your date of birth?", followup: false },
+  {
+    question: "What volunteering experience do you have?",
+    followup: true,
+  },
+  { question: "What do you do for work?", followup: true },
+  {
+    question: "Do you have accessibility requirements?",
+    followup: false,
+  },
 ];
 
 export default function ChatInterface() {

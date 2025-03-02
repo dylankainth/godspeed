@@ -32,11 +32,28 @@ export async function GET(req: NextRequest) {
     const opportunities = db.collection('opportunities');
 
     // Go to the 'test' database and fetch the 'opportunities' collection
-    const allOpportunities = await opportunities.findOne({ _id: id });
+    const result = await opportunities.aggregate([
+        { $match: { _id: id } },
+        {
+            $lookup: {
+                from: 'companies',
+                localField: 'company_id',
+                foreignField: '_id',
+                as: 'company'
+            }
+        },
+        { $unwind: '$company' }
+    ]).toArray();
+
+    if (result.length === 0) {
+        return new Response('Opportunity not found', { status: 404 });
+    }
+
+    const opportunityWithCompany = result[0];
 
     // Close the connection
     await client.close();
 
-    return new Response(JSON.stringify(allOpportunities));
+    return new Response(JSON.stringify(opportunityWithCompany));
 
 }

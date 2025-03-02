@@ -44,7 +44,19 @@ export async function GET() {
     const opportunities = db.collection('opportunities');
 
     // Find all opportunities
-    const allOpportunities = await opportunities.find({}).toArray();
+    const allOpportunities = await opportunities.aggregate([
+        {
+            $lookup: {
+                from: 'companies',
+                localField: 'company_id',
+                foreignField: '_id',
+                as: 'company'
+            }
+        },
+        {
+            $unwind: '$company'
+        }
+    ]).toArray();
 
     // if the user doesn't have a description, return an error  
     if (!user.userInfo) {
@@ -66,10 +78,14 @@ export async function GET() {
 
     for (const opportunity of allOpportunities) {
 
+
         // skip if the opportuntity doesnt have an embedding
         if (!opportunity.embedding) {
             continue;
         }
+
+
+
 
         // do vector search between userEmbedding and opportunity.embedding
         // add the result to opportunity.score
@@ -90,6 +106,11 @@ export async function GET() {
 
     // sort the opportunities by score
     allOpportunities.sort((a, b) => b.score - a.score);
+
+    // remove embedding
+    allOpportunities.forEach((opportunity) => {
+        delete opportunity.embedding;
+    });
 
 
     // Close the connection

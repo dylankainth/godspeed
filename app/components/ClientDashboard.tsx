@@ -103,14 +103,34 @@ const OpportunityCard: React.FC<{ opportunity: Opportunity }> = ({
                 </Badge>
               )}
             </div>
-            <CardTitle className="text-2xl">
+            <CardTitle className="text-2xl flex items-center justify-between">
               {opportunity.opportunity_name}
+
+              {opportunity.tags && opportunity.tags.length > 0 && (
+                <div className="ml-2 flex gap-3 p-2">
+                  {opportunity.tags.map((tag, index) => (
+                    <Badge key={index} variant="outline">
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+              )}
             </CardTitle>
+            <div className="flex gap-2" style={{ alignItems: "center" }}>
+              <img
+                src={opportunity.company.logo}
+                alt={opportunity.company.name}
+                className="w-14 h-14 object-cover rounded-full"
+              />
+              {opportunity.company.name || "Unknown Company"}
+            </div>
             <div className="flex" style={{ alignItems: "center" }}>
               {locationIcon}
               {opportunity.location.address}
             </div>
-            <p style={{ marginTop: 10 }}>{opportunity.description}</p>
+            <p style={{ marginTop: 10 }}>
+              {opportunity.description.substring(0, 250)}...
+            </p>
           </CardDescription>
           <div
             style={{

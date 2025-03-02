@@ -3,6 +3,7 @@
 import useOpportunity from "@/app/utils/useOpportunity";
 import { useRouter } from "next/navigation";
 import { Button } from "../components/ui/button";
+import { Badge } from "@/app/components/ui/badge";
 
 export default function ClientOpportunity({ id }: { id: string }) {
   const { opportunity, error } = useOpportunity(id);
@@ -69,6 +70,29 @@ export default function ClientOpportunity({ id }: { id: string }) {
       <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
         {/* Details Section */}
         <div className="md:col-span-2">
+          <div className="mb-5 flex flex-col items-center sm:flex-row sm:justify-between">
+            <div className="flex items-center">
+              {" "}
+              {/* Wrap logo and name in a flex container */}
+              <img
+                src={opportunity.company.logo}
+                alt={opportunity.company.name}
+                className="w-14 h-14 object-cover rounded-full"
+              />
+              <p className="leading-relaxed ml-2">{opportunity.company.name}</p>{" "}
+              {/* Add margin between logo and name */}
+            </div>
+
+            {opportunity.tags && opportunity.tags.length > 0 && (
+              <div className="flex gap-3 p-2 mt-2 sm:mt-0">
+                {opportunity.tags.map((tag, index) => (
+                  <Badge key={index} variant="outline">
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+            )}
+          </div>
           <div className="mb-5">
             <p className="text-lg font-semibold">Description:</p>
             <p className="leading-relaxed">{opportunity.description}</p>

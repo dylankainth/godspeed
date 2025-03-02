@@ -14,6 +14,12 @@ interface Opportunity {
     address: string;
   };
   tags: [string];
+  company: {
+    description: string;
+    logo: string;
+    name: string;
+    _id: string;
+  };
 }
 
 const useOpportunity = (id: string) => {

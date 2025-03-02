@@ -13,7 +13,14 @@ export interface Opportunity {
   location: {
     address: string;
   };
-  score? : number;
+  score?: number;
+  tags: [string];
+  company: {
+    description: string;
+    logo: string;
+    name: string;
+    _id: string;
+  };
 }
 
 const useOpportunities = () => {
