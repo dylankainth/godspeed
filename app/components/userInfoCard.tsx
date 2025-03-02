@@ -35,7 +35,7 @@ export default function UserProfile({ user }: { user: User }) {
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <h3 className="font-semibold">Email</h3>
             <p>{user.email}</p>

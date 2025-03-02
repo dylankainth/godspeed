@@ -73,17 +73,26 @@ const OpportunityCard: React.FC<{ opportunity: Opportunity }> = ({
         gridTemplateColumns: "auto 1fr auto",
       }} */
     >
-      <div className="grid md:grid-cols-[auto_1fr_auto]" // Default grid layout
+      <div className="grid md:grid-cols-[150px_2fr_auto] gap-4" // Default grid layout
         style={{ overflow: "hidden" }}>
+          <div className="w-[150px]">
+      <div className = "w-full md:w-[150px] h-full">
       <img
         src={opportunity.image}
         alt={opportunity.opportunity_name}
-        className="w-[200px] h-full object-contain bg-red-500"
+        className="w-full h-full object-cover bg-red-500"
       />
-      <CardDescription className="py-6">
-        <Badge variant="outline">
-          {getTimeLeft(opportunity.expiry_timestamp)} days left
-        </Badge>
+      </div>
+      </div>
+      <CardDescription className="py-6 flex flex-col gap-2">
+        <div className="flex gap-2">
+          <Badge variant="outline">
+            {getTimeLeft(opportunity.expiry_timestamp)} days left
+          </Badge>
+          <Badge variant="outline">
+            {Math.round((opportunity.score ?? 0) * 100)}% match
+          </Badge>
+        </div>
         <CardTitle className="text-2xl">
           {opportunity.opportunity_name}
         </CardTitle>

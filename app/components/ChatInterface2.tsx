@@ -29,14 +29,14 @@ type Message = {
 
 const questionsToAsk = [
   { question: "Have you volunteered before?", followup: true },
-  { question: "What are your skills?", followup: true },
+  // {
+  //   question: "Do you have accessibility requirements?",
+  //   followup: false,
+  // },
+  // { question: "What is your date of birth?", followup: false },
+  // { question: "What are your skills?", followup: true },
+  // { question: "What do you do for work?", followup: true },
   { question: "Do you have a DBS check?", followup: false },
-  {
-    question: "Do you have accessibility requirements?",
-    followup: false,
-  },
-  { question: "What is your date of birth?", followup: false },
-  { question: "What do you do for work?", followup: false },
 ];
 
 export default function ChatInterface() {
@@ -189,7 +189,33 @@ export default function ChatInterface() {
         (prev) => prev + " " + aiResponse.updatedExistingContext
       );
 
-      nextGeneralQuestion();
+
+      if (questionToAskIndex === questionsToAsk.length - 1) {
+        // if the last question has been asked, end the conversation
+        const endMessage: Message = {
+          id: (Date.now() + 3).toString(),
+          content: "Thank you for your time. Have a great day!",
+          role: "assistant",
+          timestamp: new Date(),
+        };
+        displayMessage(endMessage);
+
+        // send to backend for further processing and add to db
+        const result = await fetch("/api/recordOnloading", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            message: userOverallContext,
+          }),
+        });
+
+      } else {
+        nextGeneralQuestion();
+      }
+
+     
     }
   };
 

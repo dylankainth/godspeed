@@ -54,42 +54,85 @@ const Home: React.FC = () => {
         </p>
       </div>
 
-      <div className={`container ${styles.howItWorks}`}>
-        <code>HOW IT WORKS</code>
-        <div className="break" />
-        <div className="flex flex-col md:flex-row gap-4"> 
-          <Card className="flex-1 min-w-0">
-            <CardHeader>
-              <CardTitle className="text-2xl">1. Sign Up</CardTitle>
-              <CardDescription>
-                Enter your email below to login to your account
-              </CardDescription>
-            </CardHeader>
-            <CardContent></CardContent>
-          </Card>
-          <Card className="flex-1 min-w-0">
-            <CardHeader>
-              <CardTitle className="text-2xl">2. Dashboard</CardTitle>
-              <CardDescription>
-                Check out the volunteering opportunities through the dashboard
-              </CardDescription>
-            </CardHeader>
-            <CardContent></CardContent>
-          </Card>
-          <Card className="flex-1 min-w-0">
-            <CardHeader>
-              <CardTitle className="text-2xl">3. Apply</CardTitle>
-              <CardDescription>
-                Click on the opportunity that you're interested in and apply
-              </CardDescription>
-            </CardHeader>
-            <CardContent></CardContent>
-          </Card>
+      <section className={styles.section}>
+        <div className={`container ${styles.howItWorks}`}>
+          <code>HOW IT WORKS</code>
+          <div style={{height: 50}} />
+          <ul className="progressbar">
+            <li className="active">Step 1</li>
+            <li className="active">Step 2</li>
+            <li className="active">Step 3</li>
+          </ul>
+          <div style={{height: 25}} />
+
+          <div className={styles.grid}>
+            <Card className="">
+              <CardHeader>
+                <CardTitle className="text-2xl">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user-round"><path d="M18 20a6 6 0 0 0-12 0"/><circle cx="12" cy="10" r="4"/><circle cx="12" cy="12" r="10"/></svg>
+                  Sign Up
+                </CardTitle>
+                <CardDescription>
+                  Enter your email below to login to your account
+                </CardDescription>
+              </CardHeader>
+              <CardContent></CardContent>
+            </Card>
+            <Card className="">
+              <CardHeader>
+                <CardTitle className="text-2xl">AI Interview</CardTitle>
+                <CardDescription>
+                  Check out the volunteering opportunities through the dashboard
+                </CardDescription>
+              </CardHeader>
+              <CardContent></CardContent>
+            </Card>
+            <Card className="">
+              <CardHeader>
+                <CardTitle className="text-2xl">Apply</CardTitle>
+                <CardDescription>
+                  Click on the opportunity that you're interested in and apply
+                </CardDescription>
+              </CardHeader>
+              <CardContent></CardContent>
+            </Card>
+          </div>
+
+          {/* <div className="break" />
+          <div className="flex flex-col md:flex-row gap-4"> 
+            <Card className="flex-1 min-w-0">
+              <CardHeader>
+                <CardTitle className="text-2xl">1. Sign Up</CardTitle>
+                <CardDescription>
+                  Enter your email below to login to your account
+                </CardDescription>
+              </CardHeader>
+              <CardContent></CardContent>
+            </Card>
+            <Card className="flex-1 min-w-0">
+              <CardHeader>
+                <CardTitle className="text-2xl">2. Dashboard</CardTitle>
+                <CardDescription>
+                  Check out the volunteering opportunities through the dashboard
+                </CardDescription>
+              </CardHeader>
+              <CardContent></CardContent>
+            </Card>
+            <Card className="flex-1 min-w-0">
+              <CardHeader>
+                <CardTitle className="text-2xl">3. Apply</CardTitle>
+                <CardDescription>
+                  Click on the opportunity that you're interested in and apply
+                </CardDescription>
+              </CardHeader>
+              <CardContent></CardContent>
+            </Card> */}
+          {/* </div> */}
         </div>
-      </div>
+      </section>
 
       <div className="container" style={{ maxWidth: 750 }}>
-        <Carousel>
+{/*         <Carousel>
           <CarouselContent>
             {images.map((src, index) => (
               <CarouselItem key={index} className="basis-1/2">
@@ -115,7 +158,7 @@ const Home: React.FC = () => {
           </CarouselContent>
           <CarouselPrevious />
           <CarouselNext />
-        </Carousel>
+        </Carousel> */}
       </div>
     </div>
   );

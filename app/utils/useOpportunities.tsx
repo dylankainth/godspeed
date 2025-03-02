@@ -13,6 +13,7 @@ export interface Opportunity {
   location: {
     address: string;
   };
+  score? : number;
 }
 
 const useOpportunities = () => {

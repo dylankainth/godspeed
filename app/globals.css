@@ -26,7 +26,11 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-open-sans), Helvetica, sans-serif;
+}
+
+code {
+  font-family: var(--font-jetbrains-mono), monospace;
 }
 
 a {
@@ -77,7 +81,7 @@ button:focus {
   font-size: 1.1rem;
   font-weight: 400;
   color: var(--muted);
-} 
+}
 
 .hand-underline {
   position: relative;
@@ -92,7 +96,64 @@ button:focus {
   position: absolute;
   left: 0;
   width: 100%;
-  height: 25px; /* Adjust the height as needed */
+  height: 25px;
+  /* Adjust the height as needed */
   /* transform-origin: left; */
   top: 45px;
+}
+
+@media (max-width: 768px) {
+  .hand-underline::after {
+    top: 30px;
+  }
+}
+
+.progressbar li {
+  position: relative;
+  list-style: none;
+  float: left;
+  width: 33.33%;
+  text-align: center;
+}
+
+/* Circles */
+.progressbar li:before {
+  content: counter(step);
+  counter-increment: step;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #2979FF;
+  display: block;
+  text-align: center;
+  margin: 0 auto 10px auto;
+  border-radius: 50%;
+  background-color: #FF9100;
+
+  /* Center # in circle */
+  line-height: 39px;
+}
+
+.progressbar li:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: orange;
+  top: 20px;
+  /*half of height Parent (li) */
+  left: -50%;
+  z-index: -1;
+}
+
+.progressbar li:first-child:after {
+  content: none;
+}
+
+.progressbar li.active:before {
+  background: #00E676;
+  content: "✔";
+}
+
+.progressbar li.active+li:after {
+  background: #00E676;
 }

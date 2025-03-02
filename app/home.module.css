@@ -5,7 +5,15 @@
   justify-content: center;
 }
 
-.hero > div {
+.section {
+  height: 500px;
+  background-color: var(--aqua-5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero>div {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -22,7 +30,14 @@
 
 .howItWorks {
   padding: 0 20px;
-  
+  display: flex;
+  flex-direction: column;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
 }
 
 @media (max-width: 768px) {
@@ -34,4 +49,3 @@
     font-size: 3rem;
   }
 }
-
