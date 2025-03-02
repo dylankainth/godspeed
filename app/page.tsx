@@ -121,36 +121,29 @@ const Home: React.FC = () => {
               href={session ? "/dashboard" : "/signin"}
               style={{ display: "inline-block", outline: 0 }}
             >
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                style={{ width: "min-content" }}
-              >
-                {!session ? (
-                  <Button
-                    style={{
-                      display: "inline-block",
-                      marginTop: 30,
-                      width: "min-content",
-                    }}
-                    variant="outline"
-                  >
-                    Sign Up →
-                  </Button>
-                ) : (
-                  <Button
-                    style={{
-                      display: "inline-block",
-                      marginTop: 30,
-                      width: "min-content",
-                    }}
-                    variant="outline"
-                  >
-                    Dashboard →
-                  </Button>
-                )}
-              </motion.div>
+              {!session ? (
+                <Button
+                  style={{
+                    display: "inline-block",
+                    marginTop: 30,
+                    width: "min-content",
+                  }}
+                  variant="outline"
+                >
+                  Sign Up →
+                </Button>
+              ) : (
+                <Button
+                  style={{
+                    display: "inline-block",
+                    marginTop: 30,
+                    width: "min-content",
+                  }}
+                  variant="outline"
+                >
+                  Dashboard →
+                </Button>
+              )}
             </Link>
           </motion.div>
         </div>

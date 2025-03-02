@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/app/components/ui/card";
-import { signIn } from "@/auth";
+import { signIn } from "next-auth/react";
 import Vara from "vara";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -76,7 +76,7 @@ const LoginForm: React.FC = ({ ...props }) => {
           <CardHeader>
             <CardTitle className="text-2xl">Login</CardTitle>
             <CardDescription>
-              Enter your email below to login to your account
+              You will be redirected to Google to sign in.
             </CardDescription>
           </CardHeader>
           <CardContent>

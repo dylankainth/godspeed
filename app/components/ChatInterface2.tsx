@@ -18,6 +18,8 @@ import {
   CardHeader,
 } from "@/app/components/ui/card";
 
+import { motion } from "framer-motion";
+
 import { useSession } from "next-auth/react";
 
 type Message = {
@@ -220,60 +222,67 @@ export default function ChatInterface() {
       <CardContent className="p-4">
         <div
           className={
-            `space-y-4 h-[400px] overflow-y-auto mb-4 customScrollbar px-3 ` +
+            `space-y-4 h-[400px] overflow-y-auto overflow-x-hidden mb-4 customScrollbar px-3 ` +
             Styles.customScrollbar
           }
           id="messageContainer"
         >
           {messages.map((message) => (
-            <div
+            <motion.div
               key={message.id}
-              className={`flex ${
-                message.role === "user" ? "justify-end" : "justify-start"
-              }`}
+              animate={{ opacity: 1, x: 0 }} // Slide into position
+              initial={{ opacity: 0, x: message.role === "user" ? 100 : -100 }} // Slide in from right if user, else from left
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className=""
             >
               <div
-                className={`flex items-start gap-2 max-w-[80%] ${
-                  message.role === "user" ? "flex-row-reverse" : "flex-row"
+                className={`flex ${
+                  message.role === "user" ? "justify-end" : "justify-start"
                 }`}
               >
-                <Avatar className="h-8 w-8">
-                  {message.role === "assistant" ? (
-                    <>
-                      <AvatarImage
-                        src="/placeholder.svg?height=32&width=32"
-                        alt="AI"
-                      />
-                      <AvatarFallback>AI</AvatarFallback>
-                    </>
-                  ) : (
-                    <>
-                      <AvatarImage
-                        src={session?.user?.image || undefined}
-                        alt={session?.user?.name || "User"}
-                      ></AvatarImage>
-
-                      <AvatarFallback>U</AvatarFallback>
-                    </>
-                  )}
-                </Avatar>
                 <div
-                  className={`rounded-lg px-4 py-2 ${
-                    message.role === "user"
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted"
+                  className={`flex items-start gap-2 max-w-[80%] ${
+                    message.role === "user" ? "flex-row-reverse" : "flex-row"
                   }`}
                 >
-                  <p>{message.content}</p>
-                  <p className="text-xs opacity-50 mt-1">
-                    {message.timestamp.toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </p>
+                  <Avatar className="h-8 w-8">
+                    {message.role === "assistant" ? (
+                      <>
+                        <AvatarImage
+                          src="/placeholder.svg?height=32&width=32"
+                          alt="AI"
+                        />
+                        <AvatarFallback>AI</AvatarFallback>
+                      </>
+                    ) : (
+                      <>
+                        <AvatarImage
+                          src={session?.user?.image || undefined}
+                          alt={session?.user?.name || "User"}
+                        ></AvatarImage>
+
+                        <AvatarFallback>U</AvatarFallback>
+                      </>
+                    )}
+                  </Avatar>
+                  <div
+                    className={`rounded-lg px-4 py-2 ${
+                      message.role === "user"
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-muted"
+                    }`}
+                  >
+                    <p>{message.content}</p>
+                    <p className="text-xs opacity-50 mt-1">
+                      {message.timestamp.toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </CardContent>
