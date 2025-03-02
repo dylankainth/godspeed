@@ -57,8 +57,8 @@ const Home: React.FC = () => {
       <div className={`container ${styles.howItWorks}`}>
         <code>HOW IT WORKS</code>
         <div className="break" />
-        <div className="flex gap-4">
-          <Card>
+        <div className="flex flex-col md:flex-row gap-4"> 
+          <Card className="flex-1 min-w-0">
             <CardHeader>
               <CardTitle className="text-2xl">1. Sign Up</CardTitle>
               <CardDescription>
@@ -67,7 +67,7 @@ const Home: React.FC = () => {
             </CardHeader>
             <CardContent></CardContent>
           </Card>
-          <Card>
+          <Card className="flex-1 min-w-0">
             <CardHeader>
               <CardTitle className="text-2xl">2. Dashboard</CardTitle>
               <CardDescription>
@@ -76,7 +76,7 @@ const Home: React.FC = () => {
             </CardHeader>
             <CardContent></CardContent>
           </Card>
-          <Card>
+          <Card className="flex-1 min-w-0">
             <CardHeader>
               <CardTitle className="text-2xl">3. Apply</CardTitle>
               <CardDescription>
