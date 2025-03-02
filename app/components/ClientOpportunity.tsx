@@ -2,6 +2,7 @@
 
 import useOpportunity from "@/app/utils/useOpportunity";
 import { useRouter } from "next/navigation";
+import { Button } from "../components/ui/button";
 
 export default function ClientOpportunity({ id }: { id: string }) {
   const { opportunity, error } = useOpportunity(id);
@@ -59,7 +60,9 @@ export default function ClientOpportunity({ id }: { id: string }) {
     <div className="bg-white p-8 rounded-2xl shadow-xl container mx-o max-w-4xl border border-black-300">
       {/* Header */}
       <div className="pb-6 border-b border-gray-300">
-        <h2 className="text-3xl font-bold">{opportunity.opportunity_name}</h2>
+        <h2 className="text-3xl font-bold mt-1">
+          {opportunity.opportunity_name}
+        </h2>
       </div>
 
       {/* Content Layout with Image as a Column */}
@@ -107,6 +110,19 @@ export default function ClientOpportunity({ id }: { id: string }) {
       </div>
 
       {/* CTA Button */}
+      <div className="mt-8 text-center">
+        <Button
+          onClick={handleApply}
+          style={{
+            display: "inline-block",
+            marginTop: 30,
+            width: "min-content",
+          }}
+          variant="outline"
+        >
+          Apply now →
+        </Button>
+      </div>
       <div className="mt-8 text-center">
         <button
           onClick={handleApply}

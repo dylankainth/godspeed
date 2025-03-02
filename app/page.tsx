@@ -198,6 +198,7 @@ const Home: React.FC = () => {
           className="p-6 bg-white shadow-lg rounded-lg"
         >
           <div className={`container ${styles.howItWorks}`}>
+            <div style={{ height: 20 }} />
             <code>HOW IT WORKS</code>
             <div style={{ height: 50 }} />
             <ul className="progressbar">
@@ -205,6 +206,7 @@ const Home: React.FC = () => {
               <li className="active">Step 2</li>
               <li className="active">Step 3</li>
             </ul>
+
             <div style={{ height: 25 }} />
 
             <div className={styles.grid}>
@@ -235,7 +237,7 @@ const Home: React.FC = () => {
                       Sign Up
                     </CardTitle>
                     <CardDescription>
-                      Enter your email below to login to your account
+                      and create an account, then proceed to the AI Interview.
                     </CardDescription>
                   </CardHeader>
                   <CardContent></CardContent>
@@ -269,8 +271,8 @@ const Home: React.FC = () => {
                       AI Interview
                     </CardTitle>
                     <CardDescription>
-                      Check out the volunteering opportunities through the
-                      dashboard
+                      Our AI will ask you a few questions to understand your
+                      interests.
                     </CardDescription>
                   </CardHeader>
                   <CardContent></CardContent>
@@ -306,13 +308,35 @@ const Home: React.FC = () => {
                       Apply
                     </CardTitle>
                     <CardDescription>
-                      Click on the opportunity that you're interested in and
-                      apply
+                      Check out the opportunities and apply to the ones you
+                      like.
                     </CardDescription>
                   </CardHeader>
                   <CardContent></CardContent>
                 </Card>
               </motion.div>
+            </div>
+
+            <div style={{ height: 10 }} />
+
+            <div className="flex">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{ marginRight: 10, marginLeft: "auto" }}
+              >
+                <line x1="10" x2="14" y1="2" y2="2" />
+                <line x1="12" x2="15" y1="14" y2="11" />
+                <circle cx="12" cy="14" r="8" />
+              </svg>
+              <p>within 24 hours</p>
             </div>
           </div>
         </motion.div>
@@ -327,12 +351,14 @@ const Home: React.FC = () => {
             flexDirection: "column",
           }}
         >
-          <Button
+          <Link
+            href={session ? "/dashboard" : "/signin"}
             style={{ display: "block", margin: "0 auto" }}
-            variant="outline"
           >
-            Get Started
-          </Button>
+            <Button variant="outline">
+              {session ? "Dashboard →" : "Sign Up →"}
+            </Button>
+          </Link>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="100px"

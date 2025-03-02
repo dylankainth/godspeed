@@ -150,10 +150,11 @@ button:focus {
 }
 
 .progressbar li.active:before {
-  background: #00E676;
+  background: var(--aqua-dark);
   content: "✔";
+  color: white;
 }
 
 .progressbar li.active+li:after {
-  background: #00E676;
+  background: var(--aqua-dark);
 }

@@ -63,6 +63,8 @@ const OpportunityCard: React.FC<{ opportunity: Opportunity }> = ({
     return daysLeft;
   };
 
+  const isClosingSoon = getTimeLeft(opportunity.expiry_timestamp) < 3;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -93,10 +95,16 @@ const OpportunityCard: React.FC<{ opportunity: Opportunity }> = ({
           </div>
           <CardDescription className="py-6 flex flex-col gap-2">
             <div className="flex gap-2">
-              <Badge variant="outline">
+              <Badge
+                variant="outline"
+                style={{
+                  backgroundColor: isClosingSoon ? "red" : "transparent",
+                  color: isClosingSoon ? "white" : "var(--aqua-dark)",
+                }}
+              >
                 {getTimeLeft(opportunity.expiry_timestamp)} days left
               </Badge>
-              {opportunity.score !== undefined && (
+              {opportunity.score && (
                 <Badge variant="outline">
                   {Math.round((opportunity.score ?? 0) * 100)}% match
                 </Badge>

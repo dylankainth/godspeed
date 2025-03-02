@@ -29,13 +29,6 @@ type Message = {
 
 const questionsToAsk = [
   { question: "Have you volunteered before?", followup: true },
-  // {
-  //   question: "Do you have accessibility requirements?",
-  //   followup: false,
-  // },
-  // { question: "What is your date of birth?", followup: false },
-  // { question: "What are your skills?", followup: true },
-  // { question: "What do you do for work?", followup: true },
   { question: "Do you have a DBS check?", followup: false },
 ];
 
@@ -69,7 +62,12 @@ export default function ChatInterface() {
     "The user wants to volunteer."
   );
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const messageContainer = document.getElementById("messageContainer");
+    if (messageContainer) {
+      messageContainer.scrollTop = messageContainer.scrollHeight;
+    }
+  }, [messages]);
 
   // when the user submits and answer
   const handleSubmit = async (e: React.FormEvent) => {
@@ -133,23 +131,6 @@ export default function ChatInterface() {
 
       return aiResponse;
     };
-    // const recordResults = async (userAnswer: string) => {
-    //   // make a request to the /api/recordResults endpoint
-    //   const result = await fetch("/api/recordResults", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       userAnswer,
-    //       userOverallContext,
-    //     }),
-    //   });
-
-    //   const data = await result.json();
-
-    //   return data;
-    // };
 
     // CHECK if it's a follow up question
     if (questionsToAsk[questionToAskIndex].followup) {
@@ -229,20 +210,18 @@ export default function ChatInterface() {
             <AvatarFallback>AI</AvatarFallback>
           </Avatar>
           <div>
-            <p className="text-lg font-medium">AI Assistant</p>
-            <p className="text-sm text-muted-foreground">Always here to help</p>
+            <p className="text-lg font-medium">AI Interview</p>
             <p className="text-sm text-muted-foreground">
-              Data: fu count:{followupCount}, askingIndex:{questionToAskIndex}
-              <br />
-              OVERALL Context: {userOverallContext}
-              <br />
-              QUESTION Context: {userQuestionContext}
+              Let's create your volunteering profile.
             </p>
           </div>
         </div>
       </CardHeader>
       <CardContent className="p-4">
-        <div className="space-y-4 h-[400px] overflow-y-auto mb-4">
+        <div
+          className="space-y-4 h-[400px] overflow-y-auto mb-4"
+          id="messageContainer"
+        >
           {messages.map((message) => (
             <div
               key={message.id}
