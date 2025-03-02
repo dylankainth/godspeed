@@ -26,7 +26,7 @@ export async function GET() {
     // get the user's description embedding
     const users = db.collection('users');
 
-    if (!session?.user) return null;
+    if (!session?.user) return new Response('Unauthorized', { status: 401 });
 
 
     // fetch the user's data
