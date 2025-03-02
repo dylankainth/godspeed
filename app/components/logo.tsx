@@ -17,8 +17,8 @@ const Logo: React.FC<{ color?: string; size?: number }> = ({
 
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="25px"
-      height="25px"
+      width="50px"
+      height="50px"
       viewBox="0 0 25 25"
       version="1.1"
     >

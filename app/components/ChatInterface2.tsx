@@ -36,10 +36,6 @@ const questionsToAsk = [
     followup: false,
   },
   { question: "What is your date of birth?", followup: false },
-  {
-    question: "What volunteering experience do you have?",
-    followup: true,
-  },
   { question: "What do you do for work?", followup: false },
 ];
 
@@ -66,7 +62,7 @@ export default function ChatInterface() {
   const [questionToAskIndex, setQuestionToAskIndex] = useState(0);
   const [followupCount, setFollowupCount] = useState(0); // max 3
 
-  const [userQuestionContext, setUserQuestionContext] = useState("");
+  const [userQuestionContext, setUserQuestionContext] = useState("The user wants to volunteer.");
   const [userOverallContext, setUserOverallContext] = useState(
     "The user wants to volunteer."
   );
@@ -174,15 +170,24 @@ export default function ChatInterface() {
           role: "assistant",
           timestamp: new Date(),
         };
+        setUserQuestionContext(
+          (prev) => prev + " " + aiResponse.updatedExistingContext
+        );
         displayMessage(aiMessage);
         setFollowupCount((prev) => prev + 1);
       }
     } else {
       // it's not a follow up question. RECORD RESULTS by asking AI to summarise, then ask the next general question
-      const aiResponse = await getAiResponse(input);
-      const data = await aiResponse.json();
-      const sas = JSON.parse(data.message);
-      console.log(sas);
+      const aiResponse = await getAiResponse(
+        "{ 'existingContext': " +
+        userQuestionContext +
+        " , 'message': " +
+        input +
+        " }"
+      )
+      setUserOverallContext(
+        (prev) => prev + " " + aiResponse.updatedExistingContext
+      );
 
       nextGeneralQuestion();
     }

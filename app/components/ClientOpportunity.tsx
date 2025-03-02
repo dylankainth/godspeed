@@ -1,9 +1,16 @@
 "use client";
 
 import useOpportunity from "@/app/utils/useOpportunity";
+import { useRouter } from "next/navigation";
 
 export default function ClientOpportunity({ id }: { id: string }) {
   const { opportunity, error } = useOpportunity(id);
+
+  const router = useRouter();
+
+  const handleApply = () => {
+      router.push("/applied");
+  };
 
   if (error) return <p>Error: {error}</p>;
   if (!opportunity) return <p className="text-center">Loading...</p>;
@@ -59,7 +66,9 @@ export default function ClientOpportunity({ id }: { id: string }) {
 
       {/* CTA Button */}
       <div className="mt-8 text-center">
-        <button className="bg-teal-600 hover:bg-teal-700 text-white text-lg font-semibold py-3 px-8 rounded-lg shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50">
+        <button 
+         onClick={handleApply}
+        className="bg-teal-600 hover:bg-teal-700 text-white text-lg font-semibold py-3 px-8 rounded-lg shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50">
           Apply Now
         </button>
       </div>

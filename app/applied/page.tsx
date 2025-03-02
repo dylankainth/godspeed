@@ -8,6 +8,7 @@ const AppliedPage: React.FC = () => {
         <Link
           href="/"
           className="mt-6 inline-block bg-teal-600 hover:bg-teal-700 text-white text-lg font-semibold py-3 px-6 rounded-lg shadow-md transition-all duration-300"
+          style={{ background: "#07BEB8", color: "white" }}
         >
           Go Back Home
         </Link>

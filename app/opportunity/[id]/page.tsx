@@ -1,4 +1,3 @@
-import { notFound } from "next/navigation";
 import ClientOpportunity from "@/app/components/ClientOpportunity";
 
 interface PageProps {

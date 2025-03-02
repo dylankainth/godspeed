@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
                 },
                 {
                     'role': 'system',
-                    'content': 'Take in this data and ask the user a question, update their state with new information, just output json like { "output": "...", "follow-up-question": "...", "updatedExistingContext": "...STRING.." }'
+                    'content': 'Take in this data and ask the user a question, update their state with new information, just output json like { "output": "... follow up question", "updatedExistingContext": "...STRING.." }'
 
                 },
 
