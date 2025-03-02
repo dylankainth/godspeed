@@ -5,7 +5,7 @@ import useOpportunities from "@/app/utils/useOpportunities";
 import {
   Card,
   CardHeader,
-  CardDescription,
+  CardDescription, 
   CardTitle,
 } from "@/app/components/ui/card";
 import { Badge } from "@/app/components/ui/badge";
@@ -67,16 +67,18 @@ const OpportunityCard: React.FC<{ opportunity: Opportunity }> = ({
   return (
     <Card
       className="py-0"
-      style={{
+      /* style={{
         overflow: "hidden",
         display: "grid",
         gridTemplateColumns: "auto 1fr auto",
-      }}
+      }} */
     >
+      <div className="grid md:grid-cols-[auto_1fr_auto]" // Default grid layout
+        style={{ overflow: "hidden" }}>
       <img
         src={opportunity.image}
         alt={opportunity.opportunity_name}
-        style={{ background: "red", height: "100%", width: 200 }}
+        className="w-[200px] h-full object-contain bg-red-500"
       />
       <CardDescription className="py-6">
         <Badge variant="outline">
@@ -99,12 +101,15 @@ const OpportunityCard: React.FC<{ opportunity: Opportunity }> = ({
           padding: "1rem",
         }}
       >
+        <div className="flex justify-center items-center p-4">
         <Button
           variant="outline"
           onClick={() => router.push(`/opportunity/${opportunity._id}`)}
         >
           View
         </Button>
+        </div>
+      </div>
       </div>
     </Card>
   );
